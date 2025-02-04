@@ -1,10 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./home";
-import TicTacToe from "./games/tic-tac-toe";
-import Calculator from "./games/calculator";
-import Wordle from "./games/wordle";
+import Home from "./pages/home";
+import TicTacToe from "./pages/tic-tac-toe";
+import Calculator from "./pages/calculator";
+import Wordle from "./pages/wordle";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(

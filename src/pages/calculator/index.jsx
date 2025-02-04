@@ -177,8 +177,8 @@ function Calculator() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-800 mb-8">计算器</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-green-100 flex flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold text-emerald-800 mb-4">计算器</h1>
       <div className="bg-white p-6 rounded-xl shadow-lg w-96">
         {/* 显示区域 */}
         <div className="bg-gray-100 p-4 rounded mb-4 h-24">

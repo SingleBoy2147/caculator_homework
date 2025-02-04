@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import RightArrow from "./components/right-arrow";
+import RightArrow from "./right-arrow";
 
 function Home() {
   const games = [
@@ -7,19 +7,19 @@ function Home() {
       title: "井字棋",
       description: "经典的双人对战游戏",
       path: "/tic-tac-toe",
-      color: "bg-blue-500",
+      color: "bg-purple-500",
     },
     {
       title: "计算器",
       description: "简单实用的计算工具",
       path: "/calculator",
-      color: "bg-purple-500",
+      color: "bg-teal-500",
     },
     {
       title: "猜词游戏",
       description: "考验词汇量的益智游戏",
       path: "/wordle",
-      color: "bg-green-500",
+      color: "bg-amber-500",
     },
   ];
 
@@ -27,9 +27,7 @@ function Home() {
     <div className="min-h-screen bg-gray-50 px-4 py-12">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            欢迎来到小游戏世界
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">欢迎来到小游戏世界</h1>
           <p className="text-gray-600 text-lg">选择一个游戏开始您的娱乐时光</p>
         </div>
 
@@ -51,9 +49,7 @@ function GameCard({ title, description, path, color }) {
 
         <div className="flex items-start space-x-4">
           <div>
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">
-              {title}
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">{title}</h2>
             <p className="text-gray-600">{description}</p>
           </div>
         </div>

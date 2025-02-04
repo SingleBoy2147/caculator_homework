@@ -7,11 +7,7 @@ function Square({ value, onSquareClick }) {
       transition-all duration-200 rounded-lg shadow-md hover:shadow-lg hover:scale-105"
       onClick={onSquareClick}
     >
-      <span
-        className={`${value === "X" ? "text-indigo-600" : "text-pink-500"}`}
-      >
-        {value}
-      </span>
+      <span className={`${value === "X" ? "text-indigo-600" : "text-pink-500"}`}>{value}</span>
     </button>
   );
 }
@@ -30,15 +26,11 @@ function TicTacToe() {
   }
 
   const winner = calculateWinner(squares);
-  const status = winner
-    ? `获胜者: ${winner}`
-    : squares.every((square) => square)
-    ? "平局！"
-    : `下一步: ${nextPlayer}`;
+  const status = winner ? `获胜者: ${winner}` : squares.every((square) => square) ? "平局！" : `下一步: ${nextPlayer}`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-pink-100 flex flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold text-indigo-800 mb-8">井字棋游戏</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-pink-100 flex flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold text-indigo-800 mb-4">井字棋游戏</h1>
       <div className="mb-4 text-2xl font-bold text-indigo-700">{status}</div>
       <div className="grid grid-cols-3 gap-3">
         {squares.map((square, i) => (

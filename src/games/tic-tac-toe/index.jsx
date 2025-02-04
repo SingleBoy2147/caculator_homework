@@ -16,7 +16,7 @@ function Square({ value, onSquareClick }) {
   );
 }
 
-function App() {
+function TicTacToe() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [nextPlayer, setNextPlayer] = useState("X");
 
@@ -76,4 +76,4 @@ function calculateWinner(squares) {
   return null;
 }
 
-export default App;
+export default TicTacToe;

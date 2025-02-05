@@ -101,7 +101,7 @@ function Wordle() {
         ))}
       </div>
 
-      <Keyboard guesses={guesses} solution={solution} gameOver={gameOver} />
+      <Keyboard currentGuess={currentGuess} guesses={guesses} solution={solution} gameOver={gameOver} />
 
       {gameOver && (
         <button

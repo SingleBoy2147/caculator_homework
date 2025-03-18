@@ -1,11 +1,6 @@
 import React, { useState } from "react";
-
-const CalculatorButton = ({ onClick, className, children }) => (
-  <button onClick={onClick} className={`p-4 rounded ${className}`}>
-    {children}
-  </button>
-);
-
+import InputBox from "./inputBox";
+import KeyBoard from "./keyboard";
 const BUTTON_STYLES = {
   number: "bg-gray-200 hover:bg-gray-300",
   operator: "bg-blue-500 text-white hover:bg-blue-600",
@@ -145,9 +140,15 @@ function Calculator() {
   // 按钮配置数组：定义计算器键盘布局和每个按钮的属性
   const BUTTONS = [
     [
+      { label: "π", onClick: () => handleNumberClick(Math.PI), style: BUTTON_STYLES.number },
+      { label: "e", onClick: () => handleNumberClick(Math.E), style: BUTTON_STYLES.number },
+      { label: "←", onClick: handleBackspaceClick, style: BUTTON_STYLES.function },
       { label: "C", onClick: clear, style: BUTTON_STYLES.clear },
-      { label: "+/-", onClick: handlePlusMinusClick, style: BUTTON_STYLES.function },
-      { label: "%", onClick: handlePercentClick, style: BUTTON_STYLES.function },
+    ],
+    [
+      { label: "(", onClick: () => handleOperatorClick("("), style: BUTTON_STYLES.function },
+      { label: ")", onClick: () => handleOperatorClick(")"), style: BUTTON_STYLES.function },
+      { label: "%", onClick: () => handlePercentClick, style: BUTTON_STYLES.function },
       { label: "÷", onClick: () => handleOperatorClick("÷"), style: BUTTON_STYLES.operator },
     ],
     [
@@ -169,9 +170,9 @@ function Calculator() {
       { label: "+", onClick: () => handleOperatorClick("+"), style: BUTTON_STYLES.operator },
     ],
     [
+      { label: "+/-", onClick: handlePlusMinusClick, style: BUTTON_STYLES.function },
       { label: "0", onClick: () => handleNumberClick(0), style: BUTTON_STYLES.number },
       { label: ".", onClick: handleDotClick, style: BUTTON_STYLES.number },
-      { label: "←", onClick: handleBackspaceClick, style: BUTTON_STYLES.function },
       { label: "=", onClick: handleEqualClick, style: BUTTON_STYLES.equals },
     ],
   ];
@@ -180,23 +181,8 @@ function Calculator() {
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-green-100 flex flex-col items-center justify-center">
       <h1 className="text-3xl font-bold text-emerald-800 mb-4">计算器</h1>
       <div className="bg-white p-6 rounded-xl shadow-lg w-96">
-        {/* 显示区域 */}
-        <div className="bg-gray-100 p-4 rounded mb-4 h-24">
-          <div className="text-right text-xl text-gray-600 min-h-[1.5rem]">
-            {result} {operator}
-          </div>
-          <div className="text-right text-3xl">{input}</div>
-        </div>
-        {/* 键盘 */}
-        <div className="grid grid-cols-4 gap-2">
-          {BUTTONS.map((row, rowIndex) =>
-            row.map((button, colIndex) => (
-              <CalculatorButton key={`${rowIndex}-${colIndex}`} onClick={button.onClick} className={button.style}>
-                {button.label}
-              </CalculatorButton>
-            ))
-          )}
-        </div>
+        <InputBox result = {result} operator = {operator} input = {input}/>
+        <KeyBoard buttons = {BUTTONS}/>
       </div>
     </div>
   );

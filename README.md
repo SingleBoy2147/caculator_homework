@@ -1,16 +1,7 @@
 # React Games
 
-一个使用 React 构建的小游戏网站。
-
-## 在线演示
-
-访问 [https://react-games.ezzo.cc](https://react-games.ezzo.cc) 体验游戏
-
-## 游戏列表
-
-- 井字棋：经典双人游戏
-- 计算器：参考 Windows 小算盘
-- 猜词游戏：参考 [Wordle](https://www.nytimes.com/games/wordle/index.html)
+此项目为课程作业代码，未进行远程部署。
+原仓库链接：[text](https://github.com/hongfanmeng/react-games)
 
 ## 技术栈
 

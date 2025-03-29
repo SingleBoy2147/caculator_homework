@@ -17,7 +17,7 @@ export const useCalculator = () => {
 
   // 清除功能
   const clear = () => {
-    setInput("");
+    setInput("0");
     setResult("0");
     setOpdStack([]);
     setOprStack([]);
@@ -28,9 +28,95 @@ export const useCalculator = () => {
   const handleNumberClick = (number) => {
     if (equation != [] && equation.at(-1) === "=") {
       clear();
+      setInput(number.toString());
     }
-    if (input === "0") setInput(number.toString());
+    else if (input === "0") setInput(number.toString());
     else setInput(input + number.toString());
+  };
+
+  // 专门处理左括号的函数
+  const handleLeftParenthesis = () => {
+    let tempOprStack = oprStack;
+    let tempOpdStack = opdStack;
+    let tempInput = input;
+    let tempEquation = equation;
+    
+    if(equation.length > 0 && equation.at(-1) === "=") {
+      tempEquation = [];
+    }
+
+
+    if(tempInput === "" && tempEquation.at(-1) === ")") {
+      addOpr("×", tempOprStack, tempOpdStack, tempEquation);
+    }
+    else if(tempInput != "" && tempInput != "0") {
+      tempInput = addOpd(tempInput, tempOpdStack, tempEquation);
+      addOpr("×", tempOprStack, tempOpdStack, tempEquation);
+    }
+    tempOprStack.push("(");
+    tempEquation.push("(");
+
+    if (tempOpdStack.length > 0)
+      setResult(tempOpdStack.at(-1).toString());
+  
+    tempInput = "0";
+
+    setOprStack(tempOprStack);
+    setOpdStack(tempOpdStack);
+    setEquation([...tempEquation]);
+    setInput(tempInput);
+  };
+
+  // 专门处理右括号的函数
+  const handleRightParenthesis = () => {
+    let tempOprStack = oprStack;
+    let tempOpdStack = opdStack;
+    let tempInput = input;
+    let tempEquation = equation;
+
+    // 检查是否有左括号，如果没有则直接返回
+    if (!tempOprStack.includes("(")) {
+      return;
+    }
+
+    if(equation.length > 0 && equation.at(-1) === "=") {
+      tempEquation = [];
+    }
+    
+    if(tempInput != "") {
+        tempInput = addOpd(tempInput, tempOpdStack, tempEquation);
+    }
+    else if(tempEquation.length === 0 || tempEquation.at(-1) != ")") {
+      clear();
+      return;
+    }
+    while (tempOprStack.length > 0 && 
+      OPR_PRIOR[tempOprStack.at(-1)] != 3) {
+      let opd1 = tempOpdStack.at(-2);
+      let opd2 = tempOpdStack.at(-1);
+      let oprr = tempOprStack.at(-1);
+      tempOpdStack.pop(); 
+      tempOpdStack.pop();
+      tempOprStack.pop();
+      let res = calc(opd1, opd2, oprr);
+      if (!isFinite(res)) {
+        return;
+      }
+      tempOpdStack.push(res);
+    }
+    
+    tempOprStack.pop();
+    tempEquation.push(")");
+
+    if (tempOpdStack.length > 0)
+      setResult(tempOpdStack.at(-1).toString());
+
+    // tempInput = tempOpdStack.at(-1).toString();
+
+    setOprStack(tempOprStack);
+    setOpdStack(tempOpdStack);
+    setEquation([...tempEquation]);
+    setInput(tempInput);
   };
 
   // 处理运算符按钮点击事件
@@ -40,19 +126,12 @@ export const useCalculator = () => {
     let tempInput = input;
     let tempEquation = equation;
     
-    if(equation != [] && equation.at(-1) === "=") {
+    if(equation.length > 0 && equation.at(-1) === "=") {
       tempEquation = [];
+      tempInput = result;
     }
     
-    if(OPR_PRIOR[newOperator] === 3 && tempInput === "") {
-      addOpr(newOperator, tempOprStack, tempOpdStack, tempEquation);
-    }
-    else if(OPR_PRIOR[newOperator] === 3) {
-      tempInput = addOpd(tempInput, tempOpdStack, tempEquation);
-      addOpr("×", tempOprStack, tempOpdStack, tempEquation);
-      addOpr("(", tempOprStack, tempOpdStack, tempEquation);
-    }
-    else if(tempInput === "") {
+    if(tempInput === "") {
       if(tempEquation.at(-1) != ")") {
         tempEquation.pop();
 
@@ -94,6 +173,10 @@ export const useCalculator = () => {
     let tempInput = input;
     let tempEquation = equation;
     
+    if(tempEquation.length > 0 && tempEquation.at(-1) === "=") {
+      return;
+    }
+
     if (input != "")
       tempInput = addOpd(tempInput, tempOpdStack, tempEquation);
     
@@ -101,6 +184,10 @@ export const useCalculator = () => {
       if (tempOprStack.at(-1) === "(") {
         tempOprStack.pop();
         continue;
+      }
+      if(tempOpdStack.length < 2) {
+        clear();
+        return;
       }
       let opd1 = tempOpdStack.at(-2);
       let opd2 = tempOpdStack.at(-1);
@@ -123,7 +210,8 @@ export const useCalculator = () => {
     
     let finalResult = tempOpdStack.at(-1).toString();
     setResult(finalResult);
-    tempInput = "";
+
+    tempInput = finalResult;
 
     tempEquation.push("=");
 
@@ -136,17 +224,26 @@ export const useCalculator = () => {
   // 处理正负号切换
   const handlePlusMinusClick = () => {
     if (input === "") return;
+    if(equation.length > 0 && equation.at(-1) === "=") {
+      setEquation([]);
+    }
     setInput((parseFloat(input) * -1).toString());
   };
 
   // 处理百分比按钮
   const handlePercentClick = () => {
     if (input === "") return;
+    if(equation.length > 0 && equation.at(-1) === "=") {
+      setEquation([]);
+    }
     setInput(Number((parseFloat(input) / 100).toFixed(12)).toString());
   };
 
   // 处理小数点按钮
   const handleDotClick = () => {
+    if(equation.length > 0 && equation.at(-1) === "=") {
+      return;
+    }
     if (input === "") {
       setInput("0.");
       return;
@@ -159,6 +256,9 @@ export const useCalculator = () => {
 
   // 处理退格按钮
   const handleBackspaceClick = () => {
+    if(equation.length > 0 && equation.at(-1) === "=") {
+      return;
+    }
     if (input.length > 1) setInput(input.slice(0, -1));
     else if (input.length === 1) setInput("0");
   };
@@ -174,6 +274,8 @@ export const useCalculator = () => {
     handlePlusMinusClick,
     handlePercentClick,
     handleDotClick,
-    handleBackspaceClick
+    handleBackspaceClick,
+    handleLeftParenthesis,
+    handleRightParenthesis
   };
 }; 

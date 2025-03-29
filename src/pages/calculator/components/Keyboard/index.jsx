@@ -14,6 +14,8 @@ export default function Keyboard() {
     handlePercentClick,
     handleDotClick,
     handleBackspaceClick,
+    handleLeftParenthesis,
+    handleRightParenthesis,
     clear
   } = useCalculator();
 
@@ -26,8 +28,8 @@ export default function Keyboard() {
       { label: "C", onClick: clear, style: BUTTON_STYLES.clear },
     ],
     [
-      { label: "(", onClick: () => handleOperatorClick("("), style: BUTTON_STYLES.function },
-      { label: ")", onClick: () => handleOperatorClick(")"), style: BUTTON_STYLES.function },
+      { label: "(", onClick: handleLeftParenthesis, style: BUTTON_STYLES.function },
+      { label: ")", onClick: handleRightParenthesis, style: BUTTON_STYLES.function },
       { label: "%", onClick: handlePercentClick, style: BUTTON_STYLES.function },
       { label: "÷", onClick: () => handleOperatorClick("÷"), style: BUTTON_STYLES.operator },
     ],

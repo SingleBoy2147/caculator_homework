@@ -29,13 +29,7 @@ export const addOpr = (opr, tempOprStack, tempOpdStack, tempEquation) => {
   let opr_prior = OPR_PRIOR[opr];
   while (tempOprStack.length > 0 && 
     OPR_PRIOR[tempOprStack.at(-1)] >= opr_prior) {
-    if(opr_prior === 0 && OPR_PRIOR[tempOprStack.at(-1)] === 3)
-    {
-      tempOprStack.pop();
-      tempEquation.push(opr);
-      return;
-    }
-    else if(OPR_PRIOR[tempOprStack.at(-1)] === 3)
+    if(OPR_PRIOR[tempOprStack.at(-1)] === 3)
     {
       break;
     }
@@ -52,11 +46,8 @@ export const addOpr = (opr, tempOprStack, tempOpdStack, tempEquation) => {
     }
     tempOpdStack.push(res);
   }
-  if(OPR_PRIOR[opr] != 0)
-  {
-    tempOprStack.push(opr);
-    tempEquation.push(opr);
-  }
+  tempOprStack.push(opr);
+  tempEquation.push(opr);
 };
 
 // 添加操作数到栈

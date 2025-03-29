@@ -6,7 +6,7 @@ const CalculatorContext = createContext();
 // 创建上下文提供者组件
 export const CalculatorProvider = ({ children }) => {
   const [result, setResult] = useState("0");
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState("0");
   const [opdStack, setOpdStack] = useState([]);
   const [oprStack, setOprStack] = useState([]);
   const [equation, setEquation] = useState([]);

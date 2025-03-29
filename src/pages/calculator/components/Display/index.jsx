@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { StateContext } from "./index";
+import CalculatorContext from "../../context/CalculatorContext";
 
-export default function InputBox() {
-  const {input, result, equation} = useContext(StateContext);
+export default function Display() {
+  const {input, result, equation} = useContext(CalculatorContext);
   return (
     <>
       <div className="bg-gray-100 p-4 rounded mb-4 h-24">
@@ -13,4 +13,4 @@ export default function InputBox() {
       </div>
     </>
   );
-}
+} 
